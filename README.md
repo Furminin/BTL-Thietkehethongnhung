@@ -1,4 +1,4 @@
-# Gas Leakage Detector
+
 ## Block Diagram
 ### Receiver
 
