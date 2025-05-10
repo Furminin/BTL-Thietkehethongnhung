@@ -43,6 +43,136 @@ This project implements an RFID-based access control system using the STM32F103C
 | Servo VCC   | 5V                       | External 5V if STM32 supply is weak |
 | Servo GND   | GND                      | Common ground                      |
 
+RFID Access Control System - Updated Text-Based Block Diagram
+
++----------------+
+|  Start         |
+|  (Power On)    |
++----------------+
+        |
+        v
++---------------------------+
+|  Initialize System        |
+|  - Configure SPI2 (RC522) |
+|  - Configure I2C1 (LCD)   |
+|  - Configure TIM1 (Servo) |
+|  - Configure TIM2 (Tone)  |
+|  - Set Servo to 0°        |
+|  - Display "Nhap mat khau:"|
+|    or "Mat khau moi:"     |
++---------------------------+
+        |
+        v
++---------------------------+
+|  Poll RFID Module         |
+|  - Check for Card (100ms) |
+|  - If Card Detected:      |
+|    - Read UID             |
++---------------------------+
+        |                    |
+        | No                 | Yes
+        v                    v
++----------------+    +---------------------------+
+|  Check Keypad   |    |  Process RFID Card       |
+|  Input          |    |  - If addCardMode:       |
++----------------+    |    - Prompt "Quet Master Card"|
+        |            |    - Validate masterCard  |
+        |            |    - If Valid: Prompt "Quet The Moi"|
+        |            |    - Add new slaveCard    |
+        |            |  - Else:                  |
+        |            |    - Validate slaveCard   |
+        |            |    - If Valid: "Welcome",|
+        |            |      Servo 90° (1.5s),   |
+        |            |      Tone Sequence        |
+        |            |    - Else: "Sai The",    |
+        |            |      Tone (G4)           |
+        |            +---------------------------+
+        |                    |                    |
+        |                    | Add/Access         | Error
+        |                    v                    v
+        |            +----------------+    +----------------+
+        |            |  Return to     |    |  Display      |
+        |            |  "Nhap mat khau:"|    |  Error Msg   |
+        |            +----------------+    |  (e.g., "Sai Master Card")|
+        |                    |            +----------------+
+        |                    v
+        |            +---------------------------+
+        |            |  Check Keypad for 'F3'    |
+        |            |  (Add Card Mode)          |
+        |            +---------------------------+
+        |                    |                    |
+        |                    | No                 | Yes
+        |                    v                    v
+        |            +----------------+    +---------------------------+
+        |            |  Check Keypad  |    |  Enter Add Card Mode     |
+        |            |  for Digits    |    |  - Set addCardMode = 1  |
+        |            |  (0-9)         |    |  - masterAuthenticated = 0|
+        |            +----------------+    |  - Display "Quet Master Card"|
+        |                    |            +---------------------------+
+        |                    |                    |
+        |                    | No                 | Valid Master
+        |                    v                    v
+        |            +----------------+    +---------------------------+
+        |            |  Display       |    |  Prompt for New Card     |
+        |            |  "Nhap mat khau:"|    |  - Display "Quet The Moi"|
+        |            |  + Cursor      |    |  - Add slaveCard if Unique|
+        |            +----------------+    |  - Exit addCardMode      |
+        |                    |            +---------------------------+
+        |                    v
+        |            +---------------------------+
+        |            |  Process Password Input   |
+        |            |  - Collect 6 Digits      |
+        |            |  - If 'F4': Clear & Reset|
+        |            |  - Else: Validate        |
+        |            +---------------------------+
+        |                    |                    |
+        |                    | 'F4'              | 6 Digits
+        |                    v                    v
+        |            +----------------+    +---------------------------+
+        |            |  Reset         |    |  Validate Password       |
+        |            |  Password      |    |  - Compare with RightPassword|
+        |            +----------------+    |  - If Match: "Welcome",  |
+        |                    |            |    Servo 90° (1.5s),     |
+        |                    |            |    Tone Sequence          |
+        |                    |            |  - Else: "Sai Mat Khau", |
+        |                    |            |    Tone (Octave),        |
+        |                    |            |    Limit 5 Attempts      |
+        |                    |            +---------------------------+
+        |                    |                    |                    |
+        |                    |                    | Success            | Failure
+        |                    |                    v                    v
+        |                    |            +----------------+    +----------------+
+        |                    |            |  Return to     |    |  Delay 30s if  |
+        |                    |            |  "Nhap mat khau:"|    |  5 Failures    |
+        |                    |            +----------------+    +----------------+
+        |                    |                    |
+        |                    |                    v
+        |                    |            +----------------+
+        |                    |            |  Check 'F1'+'F2'|
+        |                    |            |  (Password Change)|
+        |                    |            +----------------+
+        |                    |                    |                    |
+        |                    |                    | No                 | Yes
+        |                    |                    v                    v
+        |                    |            +----------------+    +---------------------------+
+        |                    |            |  Continue      |    |  Enter Password Change    |
+        |                    |            |  Loop          |    |  - Display "Mat khau cu:" |
+        |                    |            +----------------+    |  - Validate Old Password  |
+        |                    |                    |            |  - If Valid: "Mat khau moi:"|
+        |                    |                    |            |  - Set New Password       |
+        |                    |                    |            |  - Display "Doi thanh cong"|
+        |                    |                    |            +---------------------------+
+        |                    |                    |
+        v                    v            +----------------+
++----------------+    +----------------+    |  End           |
+|  End           |    |  Error Handling|    |  (Idle Loop)   |
+|  (Idle Loop)   |    |  - If RC522    |    +----------------+
++----------------+    |    Fails:      |
+                    |    Display      |
+                    |    "RFID Failure"|
+                    |    and Halt     |
+                    +----------------+
+                    
 ## Acknowledgments
 - STM32CubeF1 HAL library for STM32F103C8T6.
 - RC522 library adapted for STM32 HAL.
