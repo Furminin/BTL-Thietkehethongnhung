@@ -39,7 +39,7 @@ This project implements an RFID-based access control system using the STM32F103C
 | LCD VCC     | 5V or 3.3V               | Check LCD specs                    |
 | LCD GND     | GND                      | Common ground                      |
 | Keypad Rows | PB3, PB4, PB5, PB6       | Output pins                        |
-| Keypad Cols | PB7, PB8, PB9, PB10      | Input pins with pull-up            |
+| Keypad Cols | PB7, PB8, PB9, PB10      | Input pins with pull-down           |
 | Servo PWM   | PA8                      | TIM1 Channel 1 (PWM)               |
 | Servo VCC   | 5V                       | External 5V if STM32 supply is weak |
 | Servo GND   | GND                      | Common ground                      |
@@ -63,31 +63,6 @@ This project implements an RFID-based access control system using the STM32F103C
 - **Error Handling**:
   - If RC522 fails to initialize, LCD shows “RFID Failure” and halts.
 
-## File Structure
-```
-your-repo-name/
-├── Core/
-│   ├── Inc/
-│   │   ├── main.h
-│   │   ├── I2C_LCD.h
-│   │   ├── I2C_LCD_cfg.h
-│   │   ├── rc522.h
-│   │   ├── KEYPAD.h
-│   │   ├── KEYPAD_cfg.h
-│   │   ├── SERVO.h
-│   ├── Src/
-│   │   ├── main.c
-│   │   ├── I2C_LCD.c
-│   │   ├── I2C_LCD_cfg.c
-│   │   ├── rc522.c
-│   │   ├── KEYPAD.c
-│   │   ├── KEYPAD_cfg.c
-│   │   ├── SERVO.c
-│   │   ├── SERVO_cfg.c
-├── .ioc                # STM32CubeMX configuration (optional)
-├── README.md
-├── LICENSE
-```
 
 - **main.c**: Main program with RFID scanning, servo control, keypad input, and LCD output.
 - **I2C_LCD.h/c/cfg**: I2C LCD driver and configuration for 16x2 display.
