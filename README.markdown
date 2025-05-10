@@ -48,9 +48,6 @@ This project implements an RFID-based access control system using the STM32F103C
 The following text-based flowchart illustrates the operational flow of the RFID access control system:
 
 ```
-=======
-RFID Access Control System - Updated Text-Based Block Diagram
-
 +----------------+
 |  Start         |
 |  (Power On)    |
@@ -110,74 +107,60 @@ RFID Access Control System - Updated Text-Based Block Diagram
         |                    | No                 | Yes
         |                    v                    v
         |            +----------------+    +---------------------------+
-        |            |  Check Keypad  |    |  Enter Add Card Mode     |
-        |            |  for Digits    |    |  - Set addCardMode = 1   |
-        |            |  (0-9)         |    |  - masterAuthenticated = 0|
-        |            |                |    |  - Display "Quet Master Card"|
-        |            +----------------+    +---------------------------+
-        |                    |                    |
-        |                    | No                 | Valid Master
-        |                    v                    v
-        |            +----------------+    +---------------------------+
-        |            |  Display       |    |  Prompt for New Card     |
-        |            |  "Nhap mat khau:"|    |  - Display "Quet The Moi"|
-        |            |  + Cursor      |    |  - Add slaveCard if Unique|
-        |            |                |    |  - Exit addCardMode      |
-        |            +----------------+    +---------------------------+
+| Check Keypad  |    |  Enter Add Card Mode     |
+| for Inputs    |    |  - Set addCardMode = 1   |
+|               |    |  - masterAuthenticated = 0|
+|               |    |  - Display "Quet Master Card"|
++----------------+    +---------------------------+
+        |                    |
+        | Digits (0-9)       | 'F4'
+        v                    v
++----------------+    +----------------+
+| Collect 6      |    | Clear Password |
+| Digits         |    | Buffer         |
+| - Display Each |    | - Reset Cursor |
+| - If 6 Digits: |    | - "Nhap mat khau:"|
+|   Validate     |    +----------------+
++----------------+           |
+        |                    | 'F1'+'F2'
         |                    v
+        |            +----------------+
+        |            | Enter Password |
+        |            | Change Mode    |
+        |            | - "Mat khau cu:"|
+        |            | - Validate Old |
+        |            | - "Mat khau moi:"|
+        |            | - Set New      |
+        |            | - "Doi thanh cong"|
+        |            +----------------+
+        |
+        | Valid             | Invalid
+        v                    v
++----------------+    +---------------------------+
+| Password OK     |    | Password Wrong           |
+| - "Welcome"     |    | - attemptCount++         |
+| - Servo 90°     |    | - "Sai Mat Khau" (2s)    |
+|   (1.5s)        |    | - Octave Tone (TIM2)     |
+| - Tone Sequence |    | - If attemptCount >= 5:  |
+| - Clear Buffer  |    |   - "Khoa 30s" (30s)     |
+| - Reset Cursor  |    |   - Reset attemptCount   |
+| - "Nhap mat khau:"|    | - Clear Buffer           |
++----------------+    | - Reset Cursor           |
+        |            | - "Nhap mat khau:"       |
         |            +---------------------------+
-        |            |  Process Password Input   |
-        |            |  - Collect 6 Digits       |
-        |            |  - If 'F4': Clear & Reset |
-        |            |  - Else: Validate         |
-        |            +---------------------------+
-        |                    |                    |
-        |                    | 'F4'               | 6 Digits
-        |                    v                    v
-        |            +----------------+    +---------------------------+
-        |            |  Reset         |    |  Validate Password       |
-        |            |  Password      |    |  - Compare with RightPassword|
-        |            |                |    |  - If Match: "Welcome",   |
-        |            |                |    |    Servo 90° (1.5s),      |
-        |            |                |    |    Tone Sequence          |
-        |            |                |    |  - Else: "Sai Mat Khau",  |
-        |            |                |    |    Tone (Octave),         |
-        |            |                |    |    Limit 5 Attempts       |
-        |            +----------------+    +---------------------------+
-        |                    |                    |                    |
-        |                    |                    | Success            | Failure
-        |                    |                    v                    v
-        |                    |            +----------------+    +----------------+
-        |                    |            |  Return to     |    |  Delay 30s if  |
-        |                    |            |  "Nhap mat khau:"|    |  5 Failures    |
-        |                    |            +----------------+    +----------------+
-        |                    |                    |
-        |                    |                    v
-        |                    |            +----------------+
-        |                    |            |  Check 'F1'+'F2'|
-        |                    |            |  (Password Change)|
-        |                    |            +----------------+
-        |                    |                    |                    |
-        |                    |                    | No                 | Yes
-        |                    |                    v                    v
-        |                    |            +----------------+    +---------------------------+
-        |                    |            |  Continue      |    |  Enter Password Change    |
-        |                    |            |  Loop          |    |  - Display "Mat khau cu:" |
-        |                    |            |                |    |  - Validate Old Password  |
-        |                    |            |                |    |  - If Valid: "Mat khau moi:"|
-        |                    |            |                |    |  - Set New Password       |
-        |                    |            |                |    |  - Display "Doi thanh cong"|
-        |                    |            |                |    +---------------------------+
-        |                    |                    |
-        v                    v            +----------------+
-+----------------+    +----------------+    |  End           |
-|  End           |    |  Error Handling|    |  (Idle Loop)   |
-|  (Idle Loop)   |    |  - If RC522    |    +----------------+
-+----------------+    |    Fails:      |
-                    |    Display      |
-                    |    "RFID Failure"|
-                    |    and Halt     |
-                    +----------------+
+        v                    v
++----------------+    +----------------+
+|  End           |    |  End           |
+|  (Idle Loop)   |    |  (Idle Loop)   |
++----------------+    +----------------+
+        |                    |
+        v                    v
++---------------------------+
+|  Error Handling           |
+|  - If RC522 Fails:        |
+|    Display "RFID Failure" |
+|    and Halt               |
++---------------------------+
 ```
 
 - **Software Flow**: The flowchart details the system’s operation:
