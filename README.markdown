@@ -9,7 +9,7 @@ This project implements an RFID-based access control system using the STM32F103C
 - **LCD Display**: Shows status messages (e.g., "Access Granted", "Scan a Card") on a 16x2 I2C LCD.
 - **Non-Blocking Operation**: Polls RFID every ~100 ms to ensure keypad responsiveness.
 
-## Hardware
+## Hardware Requirements
 - **Microcontroller**: STM32F103C8T6 Blue Pill
 - **RFID Module**: RC522 (SPI interface).
 - **LCD**: 16x2 I2C LCD (PCF8574 backpack, address 0x27 or 0x3F).
