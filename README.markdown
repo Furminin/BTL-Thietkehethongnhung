@@ -51,7 +51,6 @@ The following text-based flowchart illustrates the operational flow of the RFID 
 =======
 RFID Access Control System - Updated Text-Based Block Diagram
 
->>>>>>> d9ddd2b8cc5b60bc8af14f9b3ead77ba40b649d6
 +----------------+
 |  Start         |
 |  (Power On)    |
@@ -82,22 +81,13 @@ RFID Access Control System - Updated Text-Based Block Diagram
 +----------------+    +---------------------------+
 |  Check Keypad   |    |  Process RFID Card       |
 |  Input          |    |  - If addCardMode:       |
-<<<<<<< HEAD
 |                 |    |    - Prompt "Quet Master Card"|
 +----------------+    |    - Validate masterCard  |
-=======
-+----------------+    |    - Prompt "Quet Master Card"|
-        |            |    - Validate masterCard  |
->>>>>>> d9ddd2b8cc5b60bc8af14f9b3ead77ba40b649d6
         |            |    - If Valid: Prompt "Quet The Moi"|
         |            |    - Add new slaveCard    |
         |            |  - Else:                  |
         |            |    - Validate slaveCard   |
-<<<<<<< HEAD
         |            |    - If Valid: "Welcome", |
-=======
-        |            |    - If Valid: "Welcome",|
->>>>>>> d9ddd2b8cc5b60bc8af14f9b3ead77ba40b649d6
         |            |      Servo 90° (1.5s),   |
         |            |      Tone Sequence        |
         |            |    - Else: "Sai The",    |
@@ -121,17 +111,10 @@ RFID Access Control System - Updated Text-Based Block Diagram
         |                    v                    v
         |            +----------------+    +---------------------------+
         |            |  Check Keypad  |    |  Enter Add Card Mode     |
-<<<<<<< HEAD
         |            |  for Digits    |    |  - Set addCardMode = 1   |
         |            |  (0-9)         |    |  - masterAuthenticated = 0|
         |            |                |    |  - Display "Quet Master Card"|
         |            +----------------+    +---------------------------+
-=======
-        |            |  for Digits    |    |  - Set addCardMode = 1  |
-        |            |  (0-9)         |    |  - masterAuthenticated = 0|
-        |            +----------------+    |  - Display "Quet Master Card"|
-        |                    |            +---------------------------+
->>>>>>> d9ddd2b8cc5b60bc8af14f9b3ead77ba40b649d6
         |                    |                    |
         |                    | No                 | Valid Master
         |                    v                    v
@@ -139,7 +122,6 @@ RFID Access Control System - Updated Text-Based Block Diagram
         |            |  Display       |    |  Prompt for New Card     |
         |            |  "Nhap mat khau:"|    |  - Display "Quet The Moi"|
         |            |  + Cursor      |    |  - Add slaveCard if Unique|
-<<<<<<< HEAD
         |            |                |    |  - Exit addCardMode      |
         |            +----------------+    +---------------------------+
         |                    v
@@ -151,24 +133,10 @@ RFID Access Control System - Updated Text-Based Block Diagram
         |            +---------------------------+
         |                    |                    |
         |                    | 'F4'               | 6 Digits
-=======
-        |            +----------------+    |  - Exit addCardMode      |
-        |                    |            +---------------------------+
-        |                    v
-        |            +---------------------------+
-        |            |  Process Password Input   |
-        |            |  - Collect 6 Digits      |
-        |            |  - If 'F4': Clear & Reset|
-        |            |  - Else: Validate        |
-        |            +---------------------------+
-        |                    |                    |
-        |                    | 'F4'              | 6 Digits
->>>>>>> d9ddd2b8cc5b60bc8af14f9b3ead77ba40b649d6
         |                    v                    v
         |            +----------------+    +---------------------------+
         |            |  Reset         |    |  Validate Password       |
         |            |  Password      |    |  - Compare with RightPassword|
-<<<<<<< HEAD
         |            |                |    |  - If Match: "Welcome",   |
         |            |                |    |    Servo 90° (1.5s),      |
         |            |                |    |    Tone Sequence          |
@@ -176,15 +144,6 @@ RFID Access Control System - Updated Text-Based Block Diagram
         |            |                |    |    Tone (Octave),         |
         |            |                |    |    Limit 5 Attempts       |
         |            +----------------+    +---------------------------+
-=======
-        |            +----------------+    |  - If Match: "Welcome",  |
-        |                    |            |    Servo 90° (1.5s),     |
-        |                    |            |    Tone Sequence          |
-        |                    |            |  - Else: "Sai Mat Khau", |
-        |                    |            |    Tone (Octave),        |
-        |                    |            |    Limit 5 Attempts      |
-        |                    |            +---------------------------+
->>>>>>> d9ddd2b8cc5b60bc8af14f9b3ead77ba40b649d6
         |                    |                    |                    |
         |                    |                    | Success            | Failure
         |                    |                    v                    v
@@ -204,19 +163,11 @@ RFID Access Control System - Updated Text-Based Block Diagram
         |                    |            +----------------+    +---------------------------+
         |                    |            |  Continue      |    |  Enter Password Change    |
         |                    |            |  Loop          |    |  - Display "Mat khau cu:" |
-<<<<<<< HEAD
         |                    |            |                |    |  - Validate Old Password  |
         |                    |            |                |    |  - If Valid: "Mat khau moi:"|
         |                    |            |                |    |  - Set New Password       |
         |                    |            |                |    |  - Display "Doi thanh cong"|
         |                    |            |                |    +---------------------------+
-=======
-        |                    |            +----------------+    |  - Validate Old Password  |
-        |                    |                    |            |  - If Valid: "Mat khau moi:"|
-        |                    |                    |            |  - Set New Password       |
-        |                    |                    |            |  - Display "Doi thanh cong"|
-        |                    |                    |            +---------------------------+
->>>>>>> d9ddd2b8cc5b60bc8af14f9b3ead77ba40b649d6
         |                    |                    |
         v                    v            +----------------+
 +----------------+    +----------------+    |  End           |
@@ -227,7 +178,6 @@ RFID Access Control System - Updated Text-Based Block Diagram
                     |    "RFID Failure"|
                     |    and Halt     |
                     +----------------+
-<<<<<<< HEAD
 ```
 
 - **Software Flow**: The flowchart details the system’s operation:
