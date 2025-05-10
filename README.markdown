@@ -16,7 +16,6 @@ This project implements an RFID-based access control system using the STM32F103C
 - **Keypad**: 4x4 matrix keypad.
 - **Servo Motor**: SG90 or similar (PWM-controlled).
 - **Power Supply**: 3.3V for STM32 and RC522, 5V for servo and LCD (optional external supply).
-- **Miscellaneous**: Breadboard, jumper wires, 10kΩ resistor (optional for MISO pull-up).
 
 ## Software Requirements
 - **IDE**: STM32CubeIDE (or similar).
