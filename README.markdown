@@ -5,7 +5,7 @@ This project implements an RFID-based access control system using the STM32F103C
 ## Features
 - **RFID Card Scanning**: Reads MIFARE Classic 1K/4K cards using the RC522 module via SPI.
 - **Access Control**: Opens the door (servo to 90°) for 2 seconds when a valid `masterCard` or `slaveCard` is scanned.
-- **Password Management**: Changes a 4-digit password using the keypad, triggered by the master card (key '8').
+- **Password Management**: Changes a 6-digit password using the keypad, triggered by the master card (key '8').
 - **LCD Display**: Shows status messages (e.g., "Access Granted", "Scan a Card") on a 16x2 I2C LCD.
 - **Non-Blocking Operation**: Polls RFID every ~100 ms to ensure keypad responsiveness.
 
