@@ -163,20 +163,6 @@ The following text-based flowchart illustrates the operational flow of the RFID 
 +---------------------------+
 ```
 
-- **Software Flow**: The flowchart details the system’s operation:
-  - **Initialization**: Configures SPI2 (RC522), I2C2 (LCD, note: diagram mentions I2C1, likely a typo), TIM1 (servo), TIM2 (tone), sets servo to 0°, and displays “Nhap mat khau:” (Enter Password).
-  - **RFID Polling**: Checks for cards every 100 ms, reads UID if detected.
-  - **Card Processing**: In add card mode (triggered by ‘F3’ or ‘8’), prompts for master card (“Quet Master Card”), then new card (“Quet The Moi”) to add slaveCard. Otherwise, validates slaveCard: grants access (“Welcome”, servo to 90° for 1.5 s, tone sequence) or denies (“Sai The”, G4 tone).
-  - **Keypad Input**: Monitors for ‘F3’ (add card mode), ‘F1’+’F2’ (password change), ‘F4’ (clear password), or digits (0–9) for a 6-digit password. Displays “Nhap mat khau:” with a cursor.
-  - **Password Validation**: Compares 6-digit input to stored password. If valid, grants access (“Welcome”, servo, tone). If invalid, shows “Sai Mat Khau” (Wrong Password), plays octave tone, and locks out for 30 s after 5 failed attempts.
-  - **Password Change**: Triggered by ‘F1’+’F2’, prompts for old password (“Mat khau cu:”), then new password (“Mat khau moi:”), and confirms (“Doi thanh cong”).
-  - **Error Handling**: Displays “RFID Failure” and halts if RC522 initialization fails.
-- **Hardware Context**: The STM32F103C8T6 Blue Pill connects to:
-  - RC522 RFID Module via SPI (PB12: CS, PB0: RST, PB13: SCK, PB14: MISO, PB15: MOSI).
-  - 16x2 I2C LCD via I2C2 (PB10: SCL, PB11: SDA, note: diagram’s I2C1 is likely incorrect).
-  - 4x4 Keypad via PB3–PB6 (rows) and PB7–PB10 (columns, pull-down).
-  - SG90 Servo via PA8 (TIM1 PWM).
-  - Power: 3.3V (STM32, RC522), 5V (servo, LCD), common ground.
 
 =======
                     
