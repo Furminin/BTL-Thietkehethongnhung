@@ -164,9 +164,7 @@ The following text-based flowchart illustrates the operational flow of the RFID 
 ```
 
 
-=======
-                    
->>>>>>> d9ddd2b8cc5b60bc8af14f9b3ead77ba40b649d6
+======
 ## Acknowledgments
 - STM32CubeF1 HAL library for STM32F103C8T6.
 - RC522 library adapted for STM32 HAL.
